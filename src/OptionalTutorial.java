@@ -1,8 +1,7 @@
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Month;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,6 +11,7 @@ import static java.time.Month.MARCH;
 
 public class OptionalTutorial {
 
+    public static final int MULTIPLIER_TWO = 2;
     List<User> users = List.of(
             new User("John", LocalDate.of(1995, JANUARY, 23)),
             new User("Chris", LocalDate.of(2020, MARCH, 9)),
@@ -21,7 +21,17 @@ public class OptionalTutorial {
             new User("Anna")
     );
 
-    List<Integer> sisend = List.of(1,2,3,4,5);
+    public Map<String,LocalDate> usersByName() {
+        Map<String, LocalDate> userMap = new HashMap<>();
+        for (User user : users) {
+            userMap.put(user.name, user.birthdate);
+        }
+        return users.stream().collect(Collectors.toMap(user -> user.name, user -> user.birthdate == null ? LocalDate.parse("0000-01-01") : user.birthdate ));
+    }
+
+    public List<Integer> multiplyByTwoAll(List<Integer> numbers) {
+        return numbers.stream().map(number -> number * MULTIPLIER_TWO).toList();
+    }
 
     public Optional<User> searchUser(String name) {
         return users.stream().filter((user -> user.name.equals(name))).findFirst();
@@ -43,7 +53,6 @@ public class OptionalTutorial {
         return users.stream()
                 .filter((this::checkBirthdateMatch))
                 .toList();
-        users.get(0)
     }
 
     public void printOutUserNameIfPresent(String name) {
