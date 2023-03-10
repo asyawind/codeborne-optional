@@ -14,19 +14,20 @@ public class OptionalTutorial {
     public static final int MULTIPLIER_TWO = 2;
     List<User> users = List.of(
             new User("John", LocalDate.of(1995, JANUARY, 23)),
-            new User("Chris", LocalDate.of(2020, MARCH, 9)),
+            new User("Chris", LocalDate.of(2020, MARCH, 10)),
             new User("Christina"),
             new User("Madlene", LocalDate.of(2000, APRIL, 28)),
-            new User("Rob", LocalDate.of(1923, MARCH, 9)),
+            new User("Rob", LocalDate.of(1923, MARCH, 10)),
             new User("Anna")
     );
 
-    public Map<String,LocalDate> usersByName() {
-        Map<String, LocalDate> userMap = new HashMap<>();
-        for (User user : users) {
-            userMap.put(user.name, user.birthdate);
-        }
-        return users.stream().collect(Collectors.toMap(user -> user.name, user -> user.birthdate == null ? LocalDate.parse("0000-01-01") : user.birthdate ));
+    public Map<String, LocalDate> usersByName() {
+
+        //Below method gives nullpointerexception which is know problem with Collector.map in stream().
+        //return users.stream().collect(Collectors.toMap(user -> user.name, user -> user.birthdate == null ? LocalDate.parse("0000-01-01") : user.birthdate));
+
+        // This option can handle null values. New hashmap creation is done inside lambda function.
+        return users.stream().collect(HashMap::new, (newMap,user) -> newMap.put(user.name,user.birthdate), HashMap::putAll);
     }
 
     public List<Integer> multiplyByTwoAll(List<Integer> numbers) {

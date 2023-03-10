@@ -44,7 +44,7 @@ class OptionalTutorialTest {
 
     @Test
     void findBirthday_Rob() {
-        assertEquals(Optional.of(LocalDate.of(1923, Month.MARCH, 9)),optional.findBirthday("Rob"));
+        assertEquals(Optional.of(LocalDate.of(1923, Month.MARCH, 10)),optional.findBirthday("Rob"));
     }
 
     @Test
@@ -60,8 +60,8 @@ class OptionalTutorialTest {
     @Test
     void findBirthdaykids() {
         assertEquals(List.of(
-                new User("Chris", LocalDate.of(2020, MARCH, 9)),
-                new User("Rob", LocalDate.of(1923, MARCH, 9))
+                new User("Chris", LocalDate.of(2020, MARCH, 10)),
+                new User("Rob", LocalDate.of(1923, MARCH, 10))
         ),optional.findBirthdayKids());
     }
 
@@ -79,10 +79,10 @@ class OptionalTutorialTest {
     void groupsUserByName() {
         Map<String,LocalDate> userMap = new HashMap<>();
         userMap.put("John", LocalDate.of(1995, JANUARY, 23));
-        userMap.put("Chris", LocalDate.of(2020, MARCH, 9));
+        userMap.put("Chris", LocalDate.of(2020, MARCH, 10));
         userMap.put("Christina",null);
         userMap.put("Madlene", LocalDate.of(2000, APRIL, 28));
-        userMap.put("Rob", LocalDate.of(1923, MARCH, 9));
+        userMap.put("Rob", LocalDate.of(1923, MARCH, 10));
         userMap.put("Anna",null);
 
         assertEquals(userMap,optional.usersByName());
