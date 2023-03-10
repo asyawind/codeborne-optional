@@ -6,8 +6,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.time.Month.*;
-import static java.time.Month.JANUARY;
-import static java.time.Month.MARCH;
 
 public class OptionalTutorial {
 
@@ -16,18 +14,23 @@ public class OptionalTutorial {
             new User("John", LocalDate.of(1995, JANUARY, 23)),
             new User("Chris", LocalDate.of(2020, MARCH, 10)),
             new User("Christina"),
+            new User("Madlene", LocalDate.of(1995, JUNE, 28)),
             new User("Madlene", LocalDate.of(2000, APRIL, 28)),
             new User("Rob", LocalDate.of(1923, MARCH, 10)),
             new User("Anna")
     );
 
     public Map<String, LocalDate> usersByName() {
-
-        //Below method gives nullpointerexception which is know problem with Collector.map in stream().
+        //Below method gives nullpointerexception which is known problem with Collector.map in stream().
         //return users.stream().collect(Collectors.toMap(user -> user.name, user -> user.birthdate == null ? LocalDate.parse("0000-01-01") : user.birthdate));
 
         // This option can handle null values. New hashmap creation is done inside lambda function.
-        return users.stream().collect(HashMap::new, (newMap,user) -> newMap.put(user.name,user.birthdate), HashMap::putAll);
+        return users.stream().collect(HashMap::new, (newMap, user) -> newMap.put(user.name, user.birthdate), HashMap::putAll);
+    }
+
+    public Map<String, List<LocalDate>> usersBdaysGroupedByName() {
+        return users.stream()
+                .collect(Collectors.groupingBy(user -> user.name, Collectors.mapping(user -> user.birthdate, Collectors.toList())));
     }
 
     public List<Integer> multiplyByTwoAll(List<Integer> numbers) {
